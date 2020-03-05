@@ -69,6 +69,7 @@ ffmpeg -i input.mp4 output.gif
 ### Add Text Subtitles to a Video
 ```
 ffmpeg -i input.mp4 -i subtitles.srt -c copy -c:s mov_text output.mp4
+ffmpeg -i input.mp4 -vf subtitles=subtitles.srt output.mp4
 ```
 
 ### Trimming
@@ -85,7 +86,21 @@ file '/path/to/file.mp4'
 ffmpeg -f concat -i list.txt -c copy output.mp4
 ```
 
-### Create thumbnails
+### Create Thumbnails
 ```
 ffmpeg -i input.mp4 -vf fps=1 -an -s 400x222 output%d.jpg
+```
+
+### Scaling
+```
+ffmpeg -i input.mp4 -vf "scale=800:800:force_original_aspect_ratio=decrease,pad=800:800:(ow-iw)/2:(oh-ih)/2" output.mp4
+```
+
+### Add Text to a Video
+```
+ffmpeg -i input.mp4 -filter_complex \
+	   "[0:v]pad=iw:ih:0:(oh-ih)/2:color=yellow, \
+	   drawtext=text='EXAMPLE':fontfile=/path/to/font.ttf:fontsize=48:x=(w-tw)/2:y=(h-th)/6, \
+	   drawtext=text='EXAMPLE':fontfile=/path/to/font.ttf:fontsize=48:x=(w-tw)/2:y=h-(h-th)/6)" \
+	   output.mp4
 ```
