@@ -99,8 +99,22 @@ ffmpeg -i input.mp4 -vf "scale=800:800:force_original_aspect_ratio=decrease,pad=
 ### Add Text to a Video
 ```
 ffmpeg -i input.mp4 -filter_complex \
-	   "[0:v]pad=iw:ih:0:(oh-ih)/2:color=yellow, \
-	   drawtext=text='EXAMPLE':fontfile=/path/to/font.ttf:fontsize=48:x=(w-tw)/2:y=(h-th)/6, \
-	   drawtext=text='EXAMPLE':fontfile=/path/to/font.ttf:fontsize=48:x=(w-tw)/2:y=h-(h-th)/6)" \
-	   output.mp4
+       "[0:v]pad=iw:ih:0:(oh-ih)/2:color=yellow, \
+       drawtext=text='EXAMPLE':fontfile=/path/to/font.ttf:fontsize=48:x=(w-tw)/2:y=(h-th)/6, \
+       drawtext=text='EXAMPLE':fontfile=/path/to/font.ttf:fontsize=48:x=(w-tw)/2:y=h-(h-th)/6)" \
+       output.mp4
+```
+
+---
+
+## youtube-dl cheatsheet
+
+### Download Audio
+```
+youtube-dl -o "%(id)s.%(ext)s" --extract-audio --audio-format mp3 url
+```
+
+### Download Playlist
+```
+youtube-dl -f 22/18 -c -i -w -o "%(id)s.%(ext)s" -v url
 ```
